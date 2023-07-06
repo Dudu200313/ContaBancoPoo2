@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "cliente")
 public class Cliente {
 	
 	@Id
@@ -109,5 +109,9 @@ public class Cliente {
     	
 		return 0f;
     }
+	public static Object getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }

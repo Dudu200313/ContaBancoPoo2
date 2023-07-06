@@ -8,8 +8,9 @@ import javax.persistence.criteria.Root;
 
 import org.exemplo.persistencia.database.db.IConnection;
 import org.exemplo.persistencia.database.model.Cliente;
-import org.exemplo.persistencia.database.model.Exame;
+import org.exemplo.persistencia.database.model.Conta;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 public class ClienteDAO implements IEntityDAO<Cliente>{
 
@@ -21,6 +22,8 @@ public class ClienteDAO implements IEntityDAO<Cliente>{
 		this.conn = conn; 
 	}
 	
+
+
 	@Override
 	public void save(Cliente t) {
 		// TODO Auto-generated method stub
@@ -35,7 +38,9 @@ public class ClienteDAO implements IEntityDAO<Cliente>{
 	@Override
 	public Cliente findById(Integer id) {
 		Session session = conn.getSessionFactory().openSession();
-		return session.find(Cliente.class, id);
+		Cliente c = session.find(Cliente.class, id);
+		session.close();
+		return c;
 	}
 
 	@Override
@@ -69,5 +74,15 @@ public class ClienteDAO implements IEntityDAO<Cliente>{
 		session.close();
 		
 	}
+
+	public Cliente findByCpf(String cpf) {
+		Session session = conn.getSessionFactory().openSession();
+		String hql = "FROM cliente WHERE cpf = :cpf";
+		Query<Cliente> query = session.createNamedQuery(hql, Cliente.class);
+		query.setParameter("cpf",cpf);
+		return query.uniqueResult();
+	}
+	
+	
 
 }
